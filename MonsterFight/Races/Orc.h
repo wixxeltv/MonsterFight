@@ -4,5 +4,5 @@
 class Orc : public Mob
 {
 public:
-    Orc(std::string name):Mob(name, 200, 10, 30, 5, "Orc"){}
+    Orc(std::string name):Mob(name, 200, 20, 10, 5, "Orc"){}
 };

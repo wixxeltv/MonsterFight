@@ -5,6 +5,6 @@ class Human : public Mob
 {
 public:
     //healthPoints_(), attackDamage_(), defensePoints_(), speed_(), race_()
-    Human(std::string name):Mob(name, 100, 20, 20, 20, "Human"){}
+    Human(std::string name):Mob(name, 100, 20, 10, 20, "Human"){}
     
 };

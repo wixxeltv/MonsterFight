@@ -4,5 +4,5 @@
 class Elf : public Mob
 {
 public:
-    Elf(std::string name):Mob(name, 75, 30, 15, 25, "Elf"){}
+    Elf(std::string name):Mob(name, 90, 25, 5, 25, "Elf"){}
 };
