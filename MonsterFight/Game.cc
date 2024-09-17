@@ -1,6 +1,7 @@
 ﻿#include "Game.h"
 #pragma once
 #include <iostream>
+#include <list>
 
 #include "Mob.h"
 #include "Races/Elf.h"
@@ -59,31 +60,55 @@ bool Game::isNumber()
         return false;
     }
 }
-Mob Game::defineMob(int choice, std::string name)
+Mob Game::defineMob(std::string choice, std::string name)
 {
     Elf mobElf(name);
     Human mobHuman(name);
     Orc mobOrc(name);
-    switch (choice)
-    {
-    case 1: std::cout << name << " the Human ";
-        return mobHuman;
-    case 2: std::cout << name << " the Orc ";
-        return mobOrc;
-    case 3: std::cout << name << " the Elf ";
-        return mobElf;
-    }
+
+    std::cout << name << " the " << choice << " ";
+    
+    if(choice == mobElf.getRace()) return mobElf;
+    if(choice == mobHuman.getRace()) return mobHuman;
+    if(choice == mobOrc.getRace()) return mobOrc;
 }
-Mob Game::characterCreation()
+Mob Game::characterCreation(std::string firstOneRace = "none")
 {
+    std::list<std::string> raceAvailables = {"Human", "Orc", "Elf"};
+    if(firstOneRace != "none")
+    {
+        raceAvailables.remove(firstOneRace);
+    }
+    std::string race;
     int choice;
+
     while (true)
     {
-        std::cout << "Chose your character.\n {1} Human\n {2} Orc\n {3} Elf\n";
+        std::cout << "Chose your character.\n";
+        int i = 1;
+        for (std::string raceAvailable : raceAvailables)
+        {
+            std::cout << "{" << i << "} " << raceAvailable << "\n";
+            i++;
+        }
+        
         std::cin >> choice;
-        if(isNumber() || (choice < 1 || choice > 3)) {std::cout << "Invalid input\n"; continue;}
-        else{break;}
+        if(isNumber() || (choice < 1 || choice > raceAvailables.size()))
+        {
+            std::cout << "Invalid input\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            continue;
+        }
+        
+        auto it = raceAvailables.begin();
+        std::advance(it, choice - 1);
+        race = *it;
+        
+        break;
+       
     }
+    
     std::string name;
     while (true)
     {
@@ -97,7 +122,7 @@ Mob Game::characterCreation()
 
 
     std::cout << " The brand new ";
-    Mob mob1 = defineMob(choice, name);
+    Mob mob1 = defineMob(race, name);
     std::cout << "has join the battle.\n";
     return mob1;
 }
@@ -107,7 +132,7 @@ void Game::lunchGame()
 {
     srand(time(NULL));
     Mob mob1 = characterCreation();
-    Mob mob2 = characterCreation();
+    Mob mob2 = characterCreation(mob1.getRace());
     std::cin.ignore();
     int i = 1;
     Mob &first = mob1;

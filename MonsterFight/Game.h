@@ -14,8 +14,8 @@ private:
     void action(Mob& mobAttacker, Mob& mobDefender);
    
     bool isNumber();
-    Mob defineMob(int choice, std::string name);
-    Mob characterCreation();
+    Mob defineMob(std::string choice, std::string name);
+    Mob characterCreation(std::string firstOneRace);
 public:
     void lunchGame();
 };
